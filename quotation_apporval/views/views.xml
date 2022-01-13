@@ -1,0 +1,104 @@
+<odoo>
+    <data>
+        <record id="op_apporavl_id_new" model="ir.ui.view">
+            <field name="name">Quotation Apporval</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//header/field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,op,md,approval,sent,accountant,sale,cancel"
+                    />
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="email_sent" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="num_days" force_save="1" invisible="1"/>
+                </xpath>
+                <!-- Send by Email buttons -->
+                <xpath expr="//button[10]" position="replace">
+                    <!--                    <button name="action_quotation_send" string="Send by Email khan" type="object" states="sale"-->
+                    <!--                            class="btn-primary"/>-->
+                </xpath>
+                <xpath expr="//button[@name='action_quotation_send']" position="replace">
+                    <button name="action_quotation_send" string="Send by Email" type="object" class="oe_highlight"
+                            attrs="{'invisible': ['|',('state', 'not in', ['sent']), ('email_sent', '=', True)]}"/>
+                </xpath>
+
+                <!-- CONFIRM BUTTONS -->
+
+                <xpath expr="//button[@id='action_confirm']" position="attributes">
+                     <attribute name="states">accountant</attribute>
+                </xpath>
+                <xpath expr="//button[8]" position="replace">
+                    <!--                     <button name="action_confirm" id="action_confirm" string="Confirm" class="btn-primary" type="object"-->
+                    <!--                        attrs="{'invisible': [('state', 'not in', ['accountant'])]}"/>-->
+                </xpath>
+                <xpath expr="//header/button[@name='action_draft']" position="after">
+                    <button name="submit"
+                            string="Submit" type="object" class="oe_highlight"
+                            attrs="{'invisible': [('state', 'in', ('op','md','cancel','confirm','sent','accountant','sale','approval'))]}"/>
+
+                    <button name="approve"
+                            string=" Approve" type="object"
+                            attrs="{'invisible': [('state', 'not in', ['op'])]}"
+                            class="oe_highlight"
+                            groups="quotation_apporval.om_approval_security"
+                    />
+
+                    <button name="reject"
+                            string="Reject" type="object"
+                            attrs="{'invisible': [('state', 'not in', ['accountant'])]}"
+                            groups="quotation_apporval.accountant_approval_security"
+                    />
+
+
+                    <button name="approve_id"
+                            string="Approve" type="object" class="oe_highlight"
+                            attrs="{'invisible': [('state', 'not in', ['md'])]}"
+                            groups="quotation_apporval.md_approval_security"
+                    />
+
+                    <button name="approve_accountant"
+                            string="Proceed to SO" type="object" class="oe_highlight"
+                            attrs="{'invisible': [('state', 'not in', ['approval'])]}"
+
+                    />
+                    <!--                    <button name="action_quotation_send" type="object" string="Send PRO-FORMA Invoice"-->
+                    <!--                            attrs="{'invisible': [('state', 'in', ('md','op','draft','cancel','sent' ,'accountant','sale','confirm'))]}"-->
+                    <!--                            class="oe_highlight"-->
+                    <!--                    />-->
+                    <xpath expr="//button[9]" position="attributes">
+                        <attribute name="states"/>
+                        <attribute name="invisible">1</attribute>
+                    </xpath>
+
+
+                    <button name="action_quotation_send"
+                            string="Send Pro Forma Invoice" type="object" class="oe_highlight"
+                            attrs="{'invisible': [('state', 'not in', ['approval'])]}"
+                    />
+
+                    <button name="action_quotation_send"
+                            string="Send by Email" type="object" class="oe_highlight"
+                            attrs="{'invisible': [('state', 'not in', ['approval'])]}"
+
+                    />
+                    <!--                    <button name="action_quotation_send" string="Send by Email kkk" type="object" states="sent,sale"-->
+                    <!--                            attrs="{'invisible': [('state', 'not in', ('md' ))]}"/>-->
+                    <!--                    />-->
+                    <!--                    <button name="action_quotation_send" string="Send by Email oo" type="object" states="draft"-->
+                    <!--                            class="btn-primary" attrs="{'invisible': [('state', 'not in', ('md' ))]}"/>/>-->
+                    <button name="reject_send_to_om"
+                            string="Reject Send to OM" type="object" class="oe_highlight"
+                            attrs="{'invisible': [('state', 'in', ('md','op','draft','cancel','sent' ,'accountant','sale','confirm','approval'))]}"
+                    />
+                </xpath>
+
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

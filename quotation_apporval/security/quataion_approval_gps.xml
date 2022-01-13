@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="submit_action_id" model="res.groups">
+            <field name="name">Submit</field>
+        </record>
+        <record model="res.groups" id="om_approval_security">
+            <field name="name">OM Approval</field>
+        </record>
+
+        <record model="res.groups" id="md_approval_security">
+            <field name="name">MD Approval</field>
+        </record>
+
+        <record model="res.groups" id="accountant_approval_security">
+            <field name="name">Accountant Approval</field>
+        </record>
+    </data>
+</odoo>

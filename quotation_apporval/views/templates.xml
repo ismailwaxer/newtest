@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!--Email template -->
+         <record id="mail_template_send_to_om_approval" model="mail.template">
+            <field name="name">Quotation Approval: Send by email To OM</field>
+            <field name="email_from">${(object.company_id.email |safe}</field>
+            <field name="subject">${object.name}</field>
+            <field name="lang">${object.lang}</field>
+            <field name="email_to">${for i in object.submit():}</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="xml">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Hello
+                The Quotation : ${object.name} has been submitted  and waiting for you to approve it.
+                    </p>
+                </div>
+
+            </field>
+        </record>
+
+       <record id="mail_template_send_to_md_approval" model="mail.template">
+            <field name="name">Quotation Approval: Send by email to md</field>
+            <field name="email_from">${(object.company_id.email |safe}</field>
+            <field name="subject">${object.name}</field>
+            <field name="lang">${object.lang}</field>
+            <field name="email_to">${for i in object.submit_om():}</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="xml">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Hello
+                The Quotation : ${object.name} has been submitted  and waiting for you to approve it.
+                    </p>
+                </div>
+
+            </field>
+        </record>
+
+        <record id="mail_template_send_to_accountant_approval" model="mail.template">
+            <field name="name">Quotation Approval: Send by email to Accountant</field>
+            <field name="email_from">${(object.company_id.email |safe}</field>
+            <field name="subject">${object.name}</field>
+            <field name="lang">${object.lang}</field>
+            <field name="email_to">${for i in object.approve_accountant():}</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="xml">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Hello
+                The Quotation : ${object.name} has been submitted  and waiting for you to approve it.
+                    </p>
+                </div>
+
+            </field>
+        </record>
+    </data>
+</odoo>
